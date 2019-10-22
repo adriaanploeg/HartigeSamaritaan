@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoosterPlanner.Api", "RoosterPlanner.Api\RoosterPlanner.Api.csproj", "{C5BE7921-FFD7-4EFB-94FC-72CBEE4391A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Api", "RoosterPlanner.Api\RoosterPlanner.Api.csproj", "{C5BE7921-FFD7-4EFB-94FC-72CBEE4391A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Web", "01 - Web", "{D62A473D-EAAA-4B9F-8B4C-1E54BCE81B85}"
 EndProject
@@ -11,13 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Api", "02 - Api", "{D7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Service", "03 - Service", "{E987D3BB-5A77-4FAE-A60B-C7A0CED0150A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoosterPlanner.Service", "RoosterPlanner.Service\RoosterPlanner.Service.csproj", "{4844D7F6-BB31-455D-9B0A-EB4431B743EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Service", "RoosterPlanner.Service\RoosterPlanner.Service.csproj", "{4844D7F6-BB31-455D-9B0A-EB4431B743EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Data", "04 - Data", "{AE417EDE-D3ED-489A-A755-C5908EAE376F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoosterPlanner.Models", "RoosterPlanner.Models\RoosterPlanner.Models.csproj", "{F2450291-CC5A-41CC-82E8-B43B831804CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Models", "RoosterPlanner.Models\RoosterPlanner.Models.csproj", "{F2450291-CC5A-41CC-82E8-B43B831804CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoosterPlanner.Data", "RoosterPlanner.Data\RoosterPlanner.Data.csproj", "{83725078-880E-4044-A247-2309067CF521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Data", "RoosterPlanner.Data\RoosterPlanner.Data.csproj", "{83725078-880E-4044-A247-2309067CF521}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoosterPlanner.Common", "RoosterPlanner.Common\RoosterPlanner.Common.csproj", "{43011EFF-B6D5-4349-9A37-A953C6BD299F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{83725078-880E-4044-A247-2309067CF521}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83725078-880E-4044-A247-2309067CF521}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83725078-880E-4044-A247-2309067CF521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{4844D7F6-BB31-455D-9B0A-EB4431B743EF} = {E987D3BB-5A77-4FAE-A60B-C7A0CED0150A}
 		{F2450291-CC5A-41CC-82E8-B43B831804CA} = {AE417EDE-D3ED-489A-A755-C5908EAE376F}
 		{83725078-880E-4044-A247-2309067CF521} = {AE417EDE-D3ED-489A-A755-C5908EAE376F}
+		{43011EFF-B6D5-4349-9A37-A953C6BD299F} = {E987D3BB-5A77-4FAE-A60B-C7A0CED0150A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5486CDAE-4747-464F-82CA-6A4C0A53B576}
