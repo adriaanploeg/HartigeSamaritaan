@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29411.108
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Api", "RoosterPlanner.Api\RoosterPlanner.Api.csproj", "{C5BE7921-FFD7-4EFB-94FC-72CBEE4391A7}"
 EndProject
@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Models", "Ro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Data", "RoosterPlanner.Data\RoosterPlanner.Data.csproj", "{83725078-880E-4044-A247-2309067CF521}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoosterPlanner.Common", "RoosterPlanner.Common\RoosterPlanner.Common.csproj", "{43011EFF-B6D5-4349-9A37-A953C6BD299F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoosterPlanner.Common", "RoosterPlanner.Common\RoosterPlanner.Common.csproj", "{43011EFF-B6D5-4349-9A37-A953C6BD299F}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "RoosterPlanner.Web", "RoosterPlanner.Web\RoosterPlanner.Web.njsproj", "{EF1F3541-6DFC-4C33-B18C-9B9DE64DCD60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43011EFF-B6D5-4349-9A37-A953C6BD299F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF1F3541-6DFC-4C33-B18C-9B9DE64DCD60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF1F3541-6DFC-4C33-B18C-9B9DE64DCD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF1F3541-6DFC-4C33-B18C-9B9DE64DCD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF1F3541-6DFC-4C33-B18C-9B9DE64DCD60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{F2450291-CC5A-41CC-82E8-B43B831804CA} = {AE417EDE-D3ED-489A-A755-C5908EAE376F}
 		{83725078-880E-4044-A247-2309067CF521} = {AE417EDE-D3ED-489A-A755-C5908EAE376F}
 		{43011EFF-B6D5-4349-9A37-A953C6BD299F} = {E987D3BB-5A77-4FAE-A60B-C7A0CED0150A}
+		{EF1F3541-6DFC-4C33-B18C-9B9DE64DCD60} = {D62A473D-EAAA-4B9F-8B4C-1E54BCE81B85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5486CDAE-4747-464F-82CA-6A4C0A53B576}
