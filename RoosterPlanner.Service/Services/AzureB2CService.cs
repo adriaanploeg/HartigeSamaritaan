@@ -1,13 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.Graph;
-using Microsoft.Identity.Client;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RoosterPlanner.Common;
-using RoosterPlanner.Models;
-using RoosterPlanner.Service.DataModels.B2C;
-using RoosterPlanner.Common.Config;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,6 +6,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RoosterPlanner.Common;
+using RoosterPlanner.Common.Config;
+using RoosterPlanner.Service.DataModels;
+using RoosterPlanner.Service.DataModels.B2C;
 
 namespace RoosterPlanner.Service
 {
@@ -600,7 +600,8 @@ namespace RoosterPlanner.Service
 
             return await app.AcquireTokenOnBehalfOf(scopes, new UserAssertion(userToken)).ExecuteAsync();
         }
-       private async Task<HttpResponseMessage> SendRequestAsync(HttpMethod method, Uri apiUrl, string accessToken, string data)
+
+       private async Task<HttpResponseMessage> SendRequestAsync(HttpMethod method, Uri apiUrl, string accessToken, string data)
         {
             HttpResponseMessage response = null;
 

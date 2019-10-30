@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using RoosterPlanner.Common;
 using RoosterPlanner.Common.Config;
 using RoosterPlanner.Service;
 
@@ -30,11 +31,9 @@ namespace RoosterPlanner.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAuthentication(options =>
-            {
+            services.AddAuthentication(options => {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(jwtOptions =>
-            {
+            }).AddJwtBearer(jwtOptions => {
                 jwtOptions.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAuthentication:TenantId"]}/{Configuration["AzureMicrosoftGraph:SignUpSignInPolicyId"]}/v2.0/";
                 jwtOptions.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
@@ -44,13 +43,15 @@ namespace RoosterPlanner.Api
                     }
                 };
                 jwtOptions.Audience = Configuration["TokenValidation:ClientIdWeb"];
-                jwtOptions.Events = new JwtBearerEvents
-                {
+                jwtOptions.Events = new JwtBearerEvents {
                     OnAuthenticationFailed = AuthenticationFailedAsync
                 };
             });
 
             services.AddAuthorization();
+
+            // Enable Application Insights telemetry collection.
+            services.AddApplicationInsightsTelemetry();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => {
@@ -62,6 +63,15 @@ namespace RoosterPlanner.Api
             });
 
             services.Configure<AzureAuthenticationConfig>(Configuration.GetSection(AzureAuthenticationConfig.ConfigSectionName));
+
+            //TODO move to service layer in seperate class.
+            //services.AddDbContext<xDataContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("xDatabase")));
+            //services.BuildServiceProvider().GetService<xDataContext>().Database.Migrate();
+
+            services.AddSingleton<ILogger, Logger>((l) => {
+                return Logger.Create(this.Configuration["ApplicationInsight:InstrumentationKey"]);
+            });
 
             services.AddTransient<IAzureB2CService, AzureB2CService>();
 
@@ -79,6 +89,8 @@ namespace RoosterPlanner.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();

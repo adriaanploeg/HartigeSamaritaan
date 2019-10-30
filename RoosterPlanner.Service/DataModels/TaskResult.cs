@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace RoosterPlanner.Models
+namespace RoosterPlanner.Service.DataModels
 {
     public interface ITaskResult
     {

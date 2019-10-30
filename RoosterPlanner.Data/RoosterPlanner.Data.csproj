@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RoosterPlanner.Common\RoosterPlanner.Common.csproj" />
     <ProjectReference Include="..\RoosterPlanner.Models\RoosterPlanner.Models.csproj" />
   </ItemGroup>
 

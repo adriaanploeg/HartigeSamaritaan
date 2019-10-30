@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using RoosterPlanner.Common;
 using RoosterPlanner.Models;
 
 namespace RoosterPlanner.Data.Common
 {
     public abstract class Repository<TKey, TEntity> : IRepository<TKey, TEntity> where TEntity : class, IEntity<TKey>, new()
     {
-        protected virtual DbContext DataContext { get; private set; }
+        protected DbContext DataContext { get; private set; }
         protected virtual DbSet<TEntity> EntitySet { get; private set; }
 
+        #region Fields
+        private readonly ILogger logger = null;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Repository&lt;TEntity&gt;"/> class.
         /// </summary>
         /// <param name="dataContext">The data context.</param>
         /// <param name="useStateTracking">if set to <c>true</c> the repository will use state tracking.</param>
-        public Repository(DbContext dataContext)
+        public Repository(DbContext dataContext, ILogger logger)
         {
             this.DataContext = dataContext ?? throw new ArgumentNullException("dataContext");
 
             this.EntitySet = DataContext.Set<TEntity>();
             if (EntitySet == null)
                 throw new InvalidOperationException($"No entity set found in the context for the type {typeof(TEntity).Name}");
+
+            this.logger = logger;
         }
 
         /// <summary>
