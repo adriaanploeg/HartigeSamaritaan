@@ -170,13 +170,11 @@ namespace RoosterPlanner.Common
     {
         public static JsonSerializerSettings DefaultSettings()
         {
-            DefaultContractResolver contractResolver = new DefaultContractResolver
-            {
+            DefaultContractResolver contractResolver = new DefaultContractResolver {
                 NamingStrategy = new CamelCaseNamingStrategy(false, false)
             };
 
-            return new JsonSerializerSettings
-            {
+            return new JsonSerializerSettings {
                 ContractResolver = contractResolver,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,

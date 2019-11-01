@@ -10,11 +10,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RoosterPlanner.Common\RoosterPlanner.Common.csproj" />
     <ProjectReference Include="..\RoosterPlanner.Models\RoosterPlanner.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
