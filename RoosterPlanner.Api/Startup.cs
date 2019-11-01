@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Newtonsoft.Json;
 using RoosterPlanner.Common.Config;
 using RoosterPlanner.Service;
@@ -29,21 +30,21 @@ namespace RoosterPlanner.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            IdentityModelEventSource.ShowPII = true; // temp for more logging
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(jwtOptions =>
             {
-                jwtOptions.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAuthentication:TenantId"]}/{Configuration["AzureMicrosoftGraph:SignUpSignInPolicyId"]}/v2.0/";
+                jwtOptions.Authority = "https://login.microsoftonline.com/tfp/DeltanHackaton.onmicrosoft.com/B2C_1_susi/";
                 jwtOptions.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                    ValidateIssuer = true,
+                    ValidateIssuer = false,
                     ValidAudiences = new List<string> {
-                        Configuration["TokenValidation:ClientIdWeb"]
+                        "2eb090db-afb8-4deb-b7b4-03e649e15ca5"
                     }
                 };
-                jwtOptions.Audience = Configuration["TokenValidation:ClientIdWeb"];
+                jwtOptions.Audience = "2eb090db-afb8-4deb-b7b4-03e649e15ca5";
                 jwtOptions.Events = new JwtBearerEvents
                 {
                     OnAuthenticationFailed = AuthenticationFailedAsync
