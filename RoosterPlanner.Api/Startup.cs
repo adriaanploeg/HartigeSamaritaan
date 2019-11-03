@@ -64,17 +64,13 @@ namespace RoosterPlanner.Api
 
             services.Configure<AzureAuthenticationConfig>(Configuration.GetSection(AzureAuthenticationConfig.ConfigSectionName));
 
-            //TODO move to service layer in seperate class.
-            //services.AddDbContext<xDataContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("xDatabase")));
-            //services.BuildServiceProvider().GetService<xDataContext>().Database.Migrate();
-
             services.AddSingleton<ILogger, Logger>((l) => {
                 return Logger.Create(this.Configuration["ApplicationInsight:InstrumentationKey"]);
             });
 
             services.AddTransient<IAzureB2CService, AzureB2CService>();
 
+            DIContainerManager.Register(services, this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

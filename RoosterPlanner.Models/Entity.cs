@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoosterPlanner.Models
 {
-    public abstract class Entity<TKey> : IEntity<TKey>
+    [Serializable]
+    public abstract class Entity<TKey> : IEntity<TKey> where TKey : struct
     {
         /// <summary>
         /// Gets or sets the id.
@@ -38,5 +39,13 @@ namespace RoosterPlanner.Models
         [Timestamp]
         [Column(Order = 99)]
         public byte[] RowVersion { get; set; }
+
+        //Constructor
+        public Entity()
+        {
+            this.Id = default(TKey);
+        }
+
+        public abstract TKey SetNewKey();
     }
 }

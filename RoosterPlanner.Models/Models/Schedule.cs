@@ -11,11 +11,27 @@ namespace RoosterPlanner.Models
         public override Guid Id { get; set; }
 
         [Column(Order = 1)]
-        public int Day { get; set; }
+        public Guid ProjectId { get; set; }
+
+        [ForeignKey("ProjectId")]
+        public Project Project { get; set; }
+
+        [Column(Order = 2)]
+        public DateTime Date { get; set; }
 
         //Constructor
-        public Schedule()
+        public Schedule() : base()
         {
+        }
+
+        /// <summary>
+        /// Generated a new key and sets this as the Id value.
+        /// </summary>
+        /// <returns></returns>
+        public override Guid SetNewKey()
+        {
+            this.Id = Guid.NewGuid();
+            return this.Id;
         }
     }
 }

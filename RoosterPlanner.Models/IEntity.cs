@@ -2,7 +2,7 @@
 
 namespace RoosterPlanner.Models
 {
-    public interface IEntity<TKey>
+    public interface IEntity<TKey> where TKey : struct
     {
         /// <summary>
         /// Gets or sets the id.
@@ -26,5 +26,11 @@ namespace RoosterPlanner.Models
         /// Gets or sets the Rowversion.
         /// </summary>
         byte[] RowVersion { get; set; }
+
+        /// <summary>
+        /// Generates or set a new key for this entity.
+        /// </summary>
+        /// <returns></returns>
+        TKey SetNewKey();
     }
 }

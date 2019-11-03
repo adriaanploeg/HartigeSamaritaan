@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoosterPlanner.Models
 {
-    public class WorkingPeriod : Entity<int>
+    public class Shift : Entity<int>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column(Order = 0)]
@@ -17,8 +17,17 @@ namespace RoosterPlanner.Models
         public TimeSpan EndTime { get; set; }
 
         //Constructor
-        public WorkingPeriod()
+        public Shift() : base()
         {
+        }
+
+        /// <summary>
+        /// Generated a new key and sets this as the Id value.
+        /// </summary>
+        public override int SetNewKey()
+        {
+            //Database generated.
+            return 1;
         }
     }
 }

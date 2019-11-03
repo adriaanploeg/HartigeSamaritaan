@@ -5,7 +5,7 @@ using RoosterPlanner.Models;
 
 namespace RoosterPlanner.Data.Common
 {
-    public interface IRepository<TKey, TEntity> where TEntity : class, IEntity<TKey>, new()
+    public interface IRepository<TKey, TEntity> where TKey : struct where TEntity : class, IEntity<TKey>, new()
     {
         /// <summary>
         /// Get the entity with the provided id.
@@ -41,6 +41,6 @@ namespace RoosterPlanner.Data.Common
         /// <param name="entity">The entity.</param>
         /// <returns>The added or modified entity.</returns>
         /// <exception cref="System.ArgumentNullException">entity</exception>
-        //TEntity AddOrUpdate(TEntity entity);
+        TEntity AddOrUpdate(TEntity entity);
     }
 }
