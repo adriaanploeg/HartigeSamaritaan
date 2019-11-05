@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace RoosterPlanner.Models
 {
     [Serializable]
-    public abstract class Entity<TKey> : IEntity<TKey> where TKey : struct
+    public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : struct
     {
         /// <summary>
         /// Gets or sets the id.
@@ -18,6 +18,18 @@ namespace RoosterPlanner.Models
         [Column(Order = 0)]
         public virtual TKey Id { get; set; }
 
+        //Constructor
+        public Entity()
+        {
+            this.Id = default(TKey);
+        }
+
+        public abstract TKey SetNewKey();
+    }
+
+    [Serializable]
+    public abstract class Entity
+    {
         /// <summary>
         /// Gets or sets the LastEditBy.
         /// </summary>
@@ -43,9 +55,6 @@ namespace RoosterPlanner.Models
         //Constructor
         public Entity()
         {
-            this.Id = default(TKey);
         }
-
-        public abstract TKey SetNewKey();
     }
 }

@@ -15,14 +15,15 @@ namespace RoosterPlanner.Models
         [Required, MaxLength(64)]
         public string Name { get; set; }
 
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         public DateTime? DeletedDateTime { get; set; }
 
-        public List<Project> Projects { get; set; }
+        public List<ProjectTask> TaskProjects { get; set; }
 
         //Constructor
         public Task() : base()
         {
+            this.TaskProjects = new List<ProjectTask>();
         }
 
         /// <summary>

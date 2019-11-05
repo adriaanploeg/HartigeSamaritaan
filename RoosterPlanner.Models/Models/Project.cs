@@ -9,6 +9,7 @@ namespace RoosterPlanner.Models
     public class Project : Entity<Guid>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
         [Column(Order = 0)]
         public override Guid Id { get; set; }
 
@@ -16,18 +17,21 @@ namespace RoosterPlanner.Models
         [Required, MaxLength(64)]
         public string Name { get; set; }
 
+        [Column(Order = 2)]
         public DateTime StartDate { get; set; }
 
+        [Column(Order = 3)]
         public DateTime? EndDate { get; set; }
 
+        [Column(Order = 4)]
         public bool Closed { get; set; }
 
-        public List<Task> Tasks { get; set; }
+        public List<ProjectTask> ProjectTasks { get; set; }
 
         //Constructor
         public Project() : base()
         {
-            this.Tasks = new List<Task>();
+            this.ProjectTasks = new List<ProjectTask>();
         }
 
         /// <summary>

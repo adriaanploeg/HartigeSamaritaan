@@ -113,7 +113,8 @@ namespace RoosterPlanner.Data.Common
             EntityEntry<TEntity> entry = this.DataContext.Entry(entity);
 
             TEntity attachedEntity = null;
-            if (!entry.IsKeySet)
+            if (entity.Id is Guid && entity.Id.Equals(Guid.Empty)
+                || entity.Id is int && entity.Id.Equals(0))
             {
                 //Insert
                 entity.SetNewKey();

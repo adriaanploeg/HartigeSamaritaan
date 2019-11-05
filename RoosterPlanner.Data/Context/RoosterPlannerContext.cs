@@ -9,6 +9,10 @@ namespace RoosterPlanner.Data.Context
     {
         public DbSet<Project> Projects { get; set; }
 
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
+
+        public DbSet<Task> Tasks { get; set; }
+
         //Constructor
         public RoosterPlannerContext(DbContextOptions<RoosterPlannerContext> options) : base(options)
         {
@@ -20,8 +24,23 @@ namespace RoosterPlanner.Data.Context
             //Call base method first.
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<ProjectTask>()
+                .HasKey(pt => new { pt.ProjectId, pt.TaskId });
+            modelBuilder.Entity<ProjectTask>()
+                .HasOne<Project>(pt => pt.Project)
+                .WithMany(p => p.ProjectTasks)
+                .HasForeignKey(pt => pt.ProjectId);
+            modelBuilder.Entity<ProjectTask>()
+                .HasOne<Task>(pt => pt.Task)
+                .WithMany(t => t.TaskProjects)
+                .HasForeignKey(pt => pt.TaskId);
+
             modelBuilder.Entity<Project>(pro => {
-                pro.HasMany<Task>(p => p.Tasks);
+                pro.HasMany<ProjectTask>(pt => pt.ProjectTasks).WithOne(p => p.Project);
+            });
+
+            modelBuilder.Entity<Task>(tsk => {
+                tsk.HasMany<ProjectTask>(t => t.TaskProjects).WithOne(t => t.Task);
             });
         }
     }
