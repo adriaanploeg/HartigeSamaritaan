@@ -97,15 +97,10 @@ namespace RoosterPlanner.Data.Common
             catch (ValidationException valEx)
             {
                 //Log
-                logger.LogException(valEx, new Dictionary<string, string> { { "Message", valEx.Message } });
-
+                logger.LogException(valEx, new Dictionary<string, string> { { "Message", valEx.Message }, { "FieldValue", valEx.Value.ToString() } });
                 if (valEx.ValidationResult.MemberNames != null && valEx.ValidationResult.MemberNames.Count() != 0)
                 {
-                    StringBuilder msg = new StringBuilder("Het item kan niet opgeslagen worden omdat het niet geldig is.");
-                    msg.AppendLine().AppendLine();
-                    foreach (DictionaryEntry valError in valEx.Data)
-                        msg.AppendFormat("Veld {0}: {1}{2}", valError.Key, valError.Value, Environment.NewLine);
-                    throw new ValidationException(msg.ToString(), valEx);
+                    throw new ValidationException(ComposeErrorMessage(valEx), valEx);
                 }
                 throw valEx;
             }
@@ -113,8 +108,9 @@ namespace RoosterPlanner.Data.Common
             EntityEntry<TEntity> entry = this.DataContext.Entry(entity);
 
             TEntity attachedEntity = null;
-            if (entity.Id is Guid && entity.Id.Equals(Guid.Empty)
-                || entity.Id is int && entity.Id.Equals(0))
+            if ((entity.Id is Guid && entity.Id.Equals(Guid.Empty))
+                || (entity.Id is int && entity.Id.Equals(0))
+                || (entity.Id is DateTime && entity.Id.Equals(new DateTime())))
             {
                 //Insert
                 entity.SetNewKey();
@@ -142,11 +138,42 @@ namespace RoosterPlanner.Data.Common
 
             if (attachedEntity == null)
             {
-                entity.LastEditBy = Thread.CurrentPrincipal.Identity.Name;
+                entity.LastEditBy = "System";
                 entity.LastEditDate = DateTime.UtcNow;
             }
 
             return entity;
         }
+
+        #region Private Methods
+        /// <summary>
+        /// Creates an error message of the validation data.
+        /// </summary>
+        /// <param name="validationEx"></param>
+        /// <returns></returns>
+        private string ComposeErrorMessage(ValidationException validationEx)
+        {
+            if (validationEx == null)
+                return String.Empty;
+
+            StringBuilder msg = new StringBuilder("Het item kan niet opgeslagen worden omdat het niet geldig is.");
+            if (validationEx.Data != null && validationEx.Data.Count != 0)
+            {
+                msg.AppendLine().AppendLine();
+                foreach (DictionaryEntry valError in validationEx.Data)
+                    msg.AppendFormat("Veld {0}: {1}{2}", valError.Key, valError.Value, Environment.NewLine);
+            }
+            else if (validationEx.ValidationAttribute is MaxLengthAttribute)
+            {
+                string key = validationEx.ValidationResult.MemberNames.FirstOrDefault();
+                if (!String.IsNullOrEmpty(key))
+                {
+                    msg.AppendLine().AppendLine();
+                    msg.AppendFormat("Veld {0}: {1}{2}", key, validationEx.ValidationResult.ErrorMessage, Environment.NewLine);
+                }
+            }
+            return msg.ToString();
+        } 
+        #endregion
     }
 }
