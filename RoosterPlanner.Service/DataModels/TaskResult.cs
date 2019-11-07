@@ -55,11 +55,6 @@ namespace RoosterPlanner.Service.DataModels
         {
         }
 
-        public int Count()
-        {
-            throw new NotImplementedException();
-        }
-
         //Constructor - Overload
         public TaskResult(HttpStatusCode statusCode, string message = null)
         {

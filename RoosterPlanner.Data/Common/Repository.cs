@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -45,7 +44,7 @@ namespace RoosterPlanner.Data.Common
         /// <returns>The entity that matched the id or <c>null</c> if no match has been found.</returns>
         public virtual TEntity Get(TKey id)
         {
-            return this.EntitySet.Where(x => x.Id.Equals(id)).FirstOrDefault();
+            return this.EntitySet.FirstOrDefault(x => x.Id.Equals(id));
         }
 
         /// <summary>
@@ -55,11 +54,11 @@ namespace RoosterPlanner.Data.Common
         /// <returns>The entity that matched the id or <c>null</c> if no match has been found.</returns>
         public virtual Task<TEntity> GetAsync(TKey id)
         {
-            return this.EntitySet.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
+            return this.EntitySet.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         /// <summary>
-        /// Gets the entity  by the specified id and returns an anonymous.
+        /// Lookup the entity with the provided id's from cache, if not found then retrieved from datastore.
         /// </summary>
         /// <param name="ids">The primary keys of the entity.</param>
         /// <returns>The entity that matched the id's.</returns>
@@ -69,7 +68,7 @@ namespace RoosterPlanner.Data.Common
         }
 
         /// <summary>
-        /// Lookup the entity with the provided id's from cache, if not found then retrieve from datastore.
+        /// Lookup the entity with the provided id's from cache, if not found then retrieved from datastore.
         /// </summary>
         /// <param name="ids">The ids.</param>
         /// <returns>The list of records that matched one of the id's.</returns>
@@ -142,6 +141,31 @@ namespace RoosterPlanner.Data.Common
                 entity.LastEditDate = DateTime.UtcNow;
             }
 
+            return entity;
+        }
+
+        /// <summary>
+        /// Begins tracking the given entity in the EntityState.Deleted state 
+        /// such that it will be removed from the database when SaveChanges is called.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="rowversion">The rowversion of the entity.</param>
+        /// <returns>The entity in deleted state.</returns>
+        public virtual TEntity Remove(TKey id, byte[] rowversion)
+        {
+            return this.Remove(new TEntity() { Id = id, RowVersion = rowversion });
+        }
+
+        /// <summary>
+        /// Begins tracking the given entity in the EntityState.Deleted state 
+        /// such that it will be removed from the database when SaveChanges is called.
+        /// </summary>
+        /// <param name="entity">The entity to remove.</param>
+        /// <returns>The entity in deleted state.</returns>
+        public virtual TEntity Remove(TEntity entity)
+        {
+            if (entity != null)
+                return this.EntitySet.Remove(entity).Entity;
             return entity;
         }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using RoosterPlanner.Common;
 using RoosterPlanner.Common.Config;
@@ -35,19 +36,16 @@ namespace RoosterPlanner.Api
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(jwtOptions =>
-            {
+            }).AddJwtBearer(jwtOptions => {
                 jwtOptions.Authority = "https://login.microsoftonline.com/tfp/DeltanHackaton.onmicrosoft.com/B2C_1_susi/";
-                jwtOptions.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
+                jwtOptions.TokenValidationParameters = new TokenValidationParameters {
                     ValidateIssuer = false,
                     ValidAudiences = new List<string> {
                         "2eb090db-afb8-4deb-b7b4-03e649e15ca5"
                     }
                 };
                 jwtOptions.Audience = "2eb090db-afb8-4deb-b7b4-03e649e15ca5";
-                jwtOptions.Events = new JwtBearerEvents
-                {
+                jwtOptions.Events = new JwtBearerEvents {
                     OnAuthenticationFailed = AuthenticationFailedAsync
                 };
             });
@@ -72,7 +70,8 @@ namespace RoosterPlanner.Api
                 return Logger.Create(this.Configuration["ApplicationInsight:InstrumentationKey"]);
             });
 
-            services.AddTransient<IAzureB2CService, AzureB2CService>();
+            services.AddScoped<IAzureB2CService, AzureB2CService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             DIContainerManager.Register(services, this.Configuration);
         }

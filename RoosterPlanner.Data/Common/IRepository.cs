@@ -42,5 +42,22 @@ namespace RoosterPlanner.Data.Common
         /// <returns>The added or modified entity.</returns>
         /// <exception cref="System.ArgumentNullException">entity</exception>
         TEntity AddOrUpdate(TEntity entity);
+
+        /// <summary>
+        /// Begins tracking the given entity in the EntityState.Deleted state 
+        /// such that it will be removed from the database when SaveChanges is called.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="rowversion">The rowversion of the entity.</param>
+        /// <returns>The entity in deleted state.</returns>
+        TEntity Remove(TKey id, byte[] rowversion);
+
+        /// <summary>
+        /// Begins tracking the given entity in the EntityState.Deleted state 
+        /// such that it will be removed from the database when SaveChanges is called.
+        /// </summary>
+        /// <param name="entity">The entity to remove.</param>
+        /// <returns>The entity in deleted state.</returns>
+        TEntity Remove(TEntity entity);
     }
 }

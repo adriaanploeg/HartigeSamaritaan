@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoosterPlanner.Models
 {
-    [Serializable]
     public class Project : Entity<Guid>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
