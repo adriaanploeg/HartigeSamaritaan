@@ -331,5 +331,6 @@ ASALocalRun/
 
 # Ignore development settings
 RoosterPlanner.Api/appsettings.Development.json
+RoosterPlanner.Data.Test/appsettings.Test.json
 
 RoosterPlanner.Web/ClientApp/dist/*
