@@ -73,7 +73,7 @@ namespace RoosterPlanner.Api
             services.AddScoped<IAzureB2CService, AzureB2CService>();
             services.AddScoped<IProjectService, ProjectService>();
 
-            DIContainerManager.Register(services, this.Configuration);
+            ServiceContainer.Register(services, this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
