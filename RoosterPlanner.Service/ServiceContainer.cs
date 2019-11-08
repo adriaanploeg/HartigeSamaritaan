@@ -2,12 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RoosterPlanner.Data.Common;
 using RoosterPlanner.Data.Context;
 using RoosterPlanner.Data.Repositories;
 
 namespace RoosterPlanner.Service
 {
-    public static class DIContainerManager
+    public static class ServiceContainer
     {
         public static void Register(IServiceCollection services, IConfiguration configuration)
         {
@@ -18,6 +19,7 @@ namespace RoosterPlanner.Service
                 options.UseSqlServer(configuration.GetConnectionString("RoosterPlannerDatabase")));
             services.BuildServiceProvider().GetService<RoosterPlannerContext>().Database.Migrate();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
         }
     }
