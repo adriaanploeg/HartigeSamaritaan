@@ -10,6 +10,9 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './modules/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './modules/material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,7 @@ import { HomeComponent } from './modules/home/home.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MaterialModule,
     MsalModule.forRoot({
       clientID: environment.options.appId,
       authority: environment.options.authority,
@@ -29,7 +33,9 @@ import { HomeComponent } from './modules/home/home.component';
         string,
         string[]
       ][]
-    })
+    }),
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [ ],
   exports: [],
