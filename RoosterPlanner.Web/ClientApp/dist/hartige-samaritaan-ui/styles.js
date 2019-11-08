@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Repos\Delta-N\HartigeSamaritaan\RoosterPlanner.Web\ClientApp\src\styles.less */"./src/styles.less");
+module.exports = __webpack_require__(/*! C:\Projects\HartigeSamaritaan\RoosterPlanner.Web\ClientApp\src\styles.less */"./src/styles.less");
 
 
 /***/ })
