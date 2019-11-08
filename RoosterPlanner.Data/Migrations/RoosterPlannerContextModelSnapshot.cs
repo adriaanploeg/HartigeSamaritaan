@@ -23,7 +23,16 @@ namespace RoosterPlanner.Data.Migrations
                 {
                     b.Property<Guid>("Id");
 
+                    b.Property<string>("Address")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64);
+
                     b.Property<bool>("Closed");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(512);
 
                     b.Property<DateTime?>("EndDate");
 
@@ -37,11 +46,15 @@ namespace RoosterPlanner.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(64);
 
+                    b.Property<string>("PictureUri");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("WebsiteUrl");
 
                     b.HasKey("Id");
 
@@ -52,7 +65,9 @@ namespace RoosterPlanner.Data.Migrations
                 {
                     b.Property<Guid>("ProjectId");
 
-                    b.Property<int>("TaskId");
+                    b.Property<Guid>("TaskId");
+
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("LastEditBy")
                         .HasMaxLength(128);
@@ -66,16 +81,16 @@ namespace RoosterPlanner.Data.Migrations
 
                     b.HasKey("ProjectId", "TaskId");
 
+                    b.HasAlternateKey("Id");
+
                     b.HasIndex("TaskId");
 
-                    b.ToTable("ProjectTask");
+                    b.ToTable("ProjectTasks");
                 });
 
             modelBuilder.Entity("RoosterPlanner.Models.Task", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime?>("DeletedDateTime");
 
@@ -95,7 +110,7 @@ namespace RoosterPlanner.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Task");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("RoosterPlanner.Models.ProjectTask", b =>
