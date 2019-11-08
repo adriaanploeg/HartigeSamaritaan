@@ -123,10 +123,10 @@ namespace RoosterPlanner.Common
         /// <returns></returns>
         public static string CombinePath(string uriPath1, string uriPath2)
         {
-            if (String.IsNullOrEmpty(uriPath1))
+            if (string.IsNullOrEmpty(uriPath1))
                 throw new ArgumentNullException("uriPath1");
 
-            if (String.IsNullOrEmpty(uriPath2))
+            if (string.IsNullOrEmpty(uriPath2))
                 return uriPath1;
 
             string pathDelimeter = "/";
@@ -134,7 +134,7 @@ namespace RoosterPlanner.Common
                 uriPath2 = uriPath2.Substring(1);
 
             if (uriPath1.EndsWith(pathDelimeter))
-                pathDelimeter = String.Empty;
+                pathDelimeter = string.Empty;
 
             return $"{uriPath1}{pathDelimeter}{uriPath2}";
         }
