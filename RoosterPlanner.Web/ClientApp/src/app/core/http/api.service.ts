@@ -34,7 +34,7 @@ export class ApiService {
   private createHttpOptions(dictionary: Map<string, string>): any {
     const requestOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${sessionStorage.getItem('msal.idtoken')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('msal.idtoken')}`,
         'Content-Type': 'application/json'
       })
     };

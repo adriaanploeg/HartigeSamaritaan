@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using RoosterPlanner.Data.Common;
 using RoosterPlanner.Data.Repositories;
 using RoosterPlanner.Models;
 using RoosterPlanner.Service.DataModels;
@@ -18,6 +19,7 @@ namespace RoosterPlanner.Service
     public class ProjectService : IProjectService
     {
         #region Fields
+        private readonly IUnitOfWork unitOfWork = null;
         private readonly IProjectRepository projectRepository = null;
         private readonly ILogger logger = null;
         #endregion
@@ -25,10 +27,10 @@ namespace RoosterPlanner.Service
         private readonly Data.Context.RoosterPlannerContext dataContext = null;
 
         //Constructor
-        public ProjectService(Data.Context.RoosterPlannerContext dataContext, IProjectRepository projectRepository, ILogger logger)
+        public ProjectService(IUnitOfWork unitOfWork, ILogger logger)
         {
-            this.dataContext = dataContext;
-            this.projectRepository = projectRepository;
+            this.unitOfWork = unitOfWork;
+            this.projectRepository = unitOfWork.ProjectRepository;
             this.logger = logger;
         }
 
