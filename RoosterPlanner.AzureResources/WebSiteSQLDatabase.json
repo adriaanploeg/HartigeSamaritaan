@@ -283,18 +283,18 @@
       }
     },
     {
-      "name": "[variables('hackatonstoragedevName')]",
-      "type": "Microsoft.Storage/storageAccounts",
-      "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
+      "dependsOn": [],
+      "kind": "StorageV2",
+      "location": "[resourceGroup().location]",
+      "name": "[variables('hackatonstoragedevName')]",
       "sku": {
         "name": "[parameters('hackatonstoragedevType')]"
       },
-      "dependsOn": [ ],
       "tags": {
         "displayName": "hackatonstoragedev"
       },
-      "kind": "Storage"
+      "type": "Microsoft.Storage/storageAccounts"
     }
   ]
 }
