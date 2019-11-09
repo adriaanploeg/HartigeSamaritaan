@@ -14,9 +14,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminComponent } from './pages/admin/admin.component';
+import { ProjectComponent } from './pages/project/project.component';
 import { TaskComponent } from './pages/task/task.component';
 import { NgxTuiCalendarModule } from 'ngx-tui-calendar';
 import { QuestionsComponent } from './components/questions/questions.component';
+import { NewprojectComponent } from './pages/newproject/newproject.component';
+import { MedewerkervensterComponent } from './pages/medewerkervenster/medewerkervenster.component';
+import { PersoneelComponent } from './pages/personeel/personeel.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { QuestionsComponent } from './components/questions/questions.component';
     HomeComponent,
     AdminComponent,
     TaskComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    ProjectComponent,
+    NewprojectComponent,
+    MedewerkervensterComponent,
+    PersoneelComponent,
   ],
   imports: [
     BrowserModule,

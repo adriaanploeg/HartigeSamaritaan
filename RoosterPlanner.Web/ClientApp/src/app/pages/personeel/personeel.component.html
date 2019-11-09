@@ -1,0 +1,39 @@
+<p>personeel works!</p>
+
+<div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+      
+          <!-- Position Column -->
+          <ng-container matColumnDef="Naam">
+            <th mat-header-cell *matHeaderCellDef> Naam. </th>
+            <td mat-cell *matCellDef="let element"> {{element.Naam}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="Recent">
+            <th mat-header-cell *matHeaderCellDef> Recent </th>
+            <td mat-cell *matCellDef="let element"> {{element.Recent}} </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Beschikbaarheid">
+            <th mat-header-cell *matHeaderCellDef> Beschikbaarheid </th>
+            <td mat-cell *matCellDef="let element"> {{element.Beschikbaarheid}} </td>
+          </ng-container>
+      
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Geroosterd">
+            <th mat-header-cell *matHeaderCellDef> Geroosterd </th>
+            <td mat-cell *matCellDef="let element"> {{element.Geroosterd}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="Certificaten">
+                <th mat-header-cell *matHeaderCellDef> Certificaten </th>
+                <td mat-cell *matCellDef="let element"> {{element.Certificaten}} </td>
+              </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
