@@ -14,6 +14,20 @@ namespace RoosterPlanner.Models
         [Column(Order = 2)]
         public DateTime? DeletedDateTime { get; set; }
 
+        [Column(Order = 3)]
+        public Guid CategoryId { get; set; }
+
+        [Column(Order = 4)]
+        [MaxLength(12)]
+        public string Color { get; set; }
+
+        [Column(Order = 5)]
+        [MaxLength(128)]
+        public string DocumentUri { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
+
         public List<ProjectTask> TaskProjects { get; set; }
 
         //Constructor
