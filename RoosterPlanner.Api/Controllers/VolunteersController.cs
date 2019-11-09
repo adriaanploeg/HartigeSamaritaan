@@ -17,17 +17,27 @@ namespace RoosterPlanner.Api.Controllers
         protected IMapper Mapper { get; set; }
         public IProjectService ProjectService { get; set; }
 
-        public VolunteersController(IMapper mapper, IProjectService projectService)
+        public IParticipationService ParticipationService { get; set; }
+
+        public VolunteersController(IMapper mapper, IProjectService projectService, IParticipationService participationService)
         {
             Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             ProjectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
+            ParticipationService = participationService ?? throw new ArgumentNullException(nameof(participationService));
         }
 
         [HttpGet("getprojects")]
-        public async Task<ActionResult<IEnumerable<Projects>>> Get()
+        public async Task<ActionResult<IEnumerable<Projects>>> GetProjects()
         {
             var projects = await ProjectService.GetActiveProjectsAsync();
             return  projects.Data.Select(i => Mapper.Map<Projects>(i)).ToList();
+        }
+
+        [HttpPost("setparticipation/{oid}/{projectId}")]
+        public async Task<ActionResult> SetParticipation(Guid oid, Guid projectId)
+        {
+            await ParticipationService.AddParticipationAsync(oid, projectId);
+            return Ok();
         }
     }
 }
