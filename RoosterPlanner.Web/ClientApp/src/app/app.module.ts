@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminComponent } from './pages/admin/admin.component';
+import { TaskComponent } from './pages/task/task.component';
 import { NgxTuiCalendarModule } from 'ngx-tui-calendar';
 import { QuestionsComponent } from './components/questions/questions.component';
 
@@ -22,6 +23,7 @@ import { QuestionsComponent } from './components/questions/questions.component';
     AppComponent,
     HomeComponent,
     AdminComponent,
+    TaskComponent,
     QuestionsComponent
   ],
   imports: [
