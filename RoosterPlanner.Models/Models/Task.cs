@@ -5,12 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoosterPlanner.Models
 {
-    public class Task : Entity<int>
+    public class Task : Entity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column(Order = 0)]
-        public override int Id { get; set; }
-
         [Column(Order = 1)]
         [Required, MaxLength(64)]
         public string Name { get; set; }
@@ -18,21 +14,31 @@ namespace RoosterPlanner.Models
         [Column(Order = 2)]
         public DateTime? DeletedDateTime { get; set; }
 
+        [Column(Order = 3)]
+        public Guid CategoryId { get; set; }
+
+        [Column(Order = 4)]
+        [MaxLength(12)]
+        public string Color { get; set; }
+
+        [Column(Order = 5)]
+        [MaxLength(128)]
+        public string DocumentUri { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
+
         public List<ProjectTask> TaskProjects { get; set; }
 
         //Constructor
-        public Task() : base()
+        public Task() : this(Guid.Empty)
         {
-            this.TaskProjects = new List<ProjectTask>();
         }
 
-        /// <summary>
-        /// Generated a new key and sets this as the Id value.
-        /// </summary>
-        public override int SetNewKey()
+        //Constructor
+        public Task(Guid id) : base(id)
         {
-            //Database generated.
-            return 1;
+            this.TaskProjects = new List<ProjectTask>();
         }
     }
 }

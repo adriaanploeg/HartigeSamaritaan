@@ -11,10 +11,18 @@ namespace RoosterPlanner.Data.Common
     {
         IProjectRepository ProjectRepository { get; }
 
+        IParticipationRepository ParticipationRepository { get; }
+
+        IPersonRepository PersonRepository { get; }
+
+        ITaskRepository TaskRepository { get; }
+
+        ICategoryRepository CategoryRepository { get; }
+
         /// <summary>
         /// Saves the changes.
         /// </summary>
-        void SaveChanges();
+        int SaveChanges();
 
         /// <summary>
         /// Saves the changes.
@@ -37,6 +45,12 @@ namespace RoosterPlanner.Data.Common
         protected ILogger Logger { get; private set; }
 
         private IProjectRepository projectRepository;
+
+        private IParticipationRepository participationRepository;
+
+        private IPersonRepository personRepository;
+        private ITaskRepository taskRepository;
+        private ICategoryRepository categoryRepository;
         #endregion
 
         public IProjectRepository ProjectRepository
@@ -46,6 +60,46 @@ namespace RoosterPlanner.Data.Common
                 if (projectRepository == null)
                     this.projectRepository = new ProjectRepository(this.DataContext, null);
                 return this.projectRepository;
+            }
+        }
+
+        public ITaskRepository TaskRepository
+        {
+            get
+            {
+                if (taskRepository == null)
+                    this.taskRepository = new TaskRepository(this.DataContext, null);
+                return this.taskRepository;
+            }
+        }
+
+        public ICategoryRepository CategoryRepository
+        {
+            get
+            {
+                if (categoryRepository == null)
+                    this.categoryRepository = new CategoryRepository(this.DataContext, null);
+                return this.categoryRepository;
+            }
+        }
+
+        public IParticipationRepository ParticipationRepository
+        {
+            get
+            {
+                if (participationRepository == null)
+                    this.participationRepository = new ParticipationRepository(this.DataContext, null);
+                return this.participationRepository;
+            }
+        }
+
+        public IPersonRepository PersonRepository
+        {
+            get
+            {
+                if (personRepository == null)
+                    this.personRepository = new PersonRepository(this.DataContext, null);
+                return this.personRepository;
             }
         }
 
@@ -65,9 +119,9 @@ namespace RoosterPlanner.Data.Common
         /// <summary>
         /// Saves the changes.
         /// </summary>
-        public void SaveChanges()
+        public int SaveChanges()
         {
-            DataContext.SaveChanges();
+            return DataContext.SaveChanges();
         }
 
         /// <summary>

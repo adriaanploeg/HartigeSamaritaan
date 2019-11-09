@@ -8,10 +8,10 @@ export const environment = {
   options: {
     redirectUri: "http://localhost:4200/",
     protectedResourceMap: [],
-    appId: "2eb090db-afb8-4deb-b7b4-03e649e15ca5",
+      appId: "c832c923-37c6-4145-8c75-a023ecc7a98f",
     authority: "https://login.microsoftonline.com/tfp/DeltanHackaton.onmicrosoft.com/B2C_1_susi/"
   }
-}; 
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using RoosterPlanner.Data.Context.Seed;
 using RoosterPlanner.Models;
 
 namespace RoosterPlanner.Data.Context
@@ -12,6 +13,12 @@ namespace RoosterPlanner.Data.Context
         public DbSet<ProjectTask> ProjectTasks { get; set; }
 
         public DbSet<Task> Tasks { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Person> Persons { get; set; }
+
+        public DbSet<Participation> Participations { get; set; }
 
         //Constructor
         public RoosterPlannerContext(DbContextOptions<RoosterPlannerContext> options) : base(options)
@@ -42,6 +49,13 @@ namespace RoosterPlanner.Data.Context
             modelBuilder.Entity<Task>(tsk => {
                 tsk.HasMany<ProjectTask>(t => t.TaskProjects).WithOne(t => t.Task);
             });
+
+            CategorySeed categorySeed = new CategorySeed(modelBuilder);
+            PersonSeed personSeed = new PersonSeed(modelBuilder);
+            List<Category> categorieList = categorySeed.Seed();
+            List<Person> personList = personSeed.Seed();
+
+
         }
     }
 }

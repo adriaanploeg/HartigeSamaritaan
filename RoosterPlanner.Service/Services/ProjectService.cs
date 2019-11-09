@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using RoosterPlanner.Common;
 using RoosterPlanner.Data.Common;
 using RoosterPlanner.Data.Repositories;
 using RoosterPlanner.Models;
+using RoosterPlanner.Models.FilterModels;
 using RoosterPlanner.Service.DataModels;
 
 namespace RoosterPlanner.Service
@@ -12,6 +13,10 @@ namespace RoosterPlanner.Service
     public interface IProjectService
     {
         Task<TaskListResult<Project>> GetActiveProjectsAsync();
+
+        Task<TaskListResult<Project>> SearchProjectsAsync(ProjectFilter filter);
+
+        Task<TaskResult<Project>> GetProjectDetails(Guid id);
 
         TaskResult<Project> CloseProject(Project project);
     }
@@ -23,8 +28,6 @@ namespace RoosterPlanner.Service
         private readonly IProjectRepository projectRepository = null;
         private readonly ILogger logger = null;
         #endregion
-
-        private readonly Data.Context.RoosterPlannerContext dataContext = null;
 
         //Constructor
         public ProjectService(IUnitOfWork unitOfWork, ILogger logger)
@@ -45,10 +48,56 @@ namespace RoosterPlanner.Service
             try
             {
                 taskResult.Data = await this.projectRepository.GetActiveProjectsAsync();
+                taskResult.Succeeded = true;
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Fout bij het ophalen van actieve projecten.");
+                logger.Error(ex, "Fout bij het ophalen van actieve projecten.");
+                taskResult.Error = ex;
+            }
+            return taskResult;
+        }
+
+        /// <summary>
+        /// Search for projects 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public async Task<TaskListResult<Project>> SearchProjectsAsync(ProjectFilter filter)
+        {
+            if (filter == null)
+                throw new ArgumentNullException("filter");
+
+            TaskListResult<Project> taskResult = TaskListResult<Project>.CreateDefault();
+
+            try
+            {
+                taskResult.Data = await this.projectRepository.SearchProjectsAsync(filter);
+                taskResult.Succeeded = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Fout bij het uitvoeren van een zoekopdracht op projecten.");
+                taskResult.Error = ex;
+            }
+            return taskResult;
+        }
+
+        public async Task<TaskResult<Project>> GetProjectDetails(Guid id)
+        {
+            if (id == Guid.Empty)
+                return null;
+
+            TaskResult<Project> taskResult = new TaskResult<Project>();
+
+            try
+            {
+                taskResult.Data = await this.projectRepository.GetProjectDetails(id);
+                taskResult.Succeeded = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Fout bij het uitvoeren van een zoekopdracht op projecten.");
                 taskResult.Error = ex;
             }
             return taskResult;
@@ -67,11 +116,11 @@ namespace RoosterPlanner.Service
             {
                 project.Closed = true;
                 taskResult.Data = this.projectRepository.AddOrUpdate(project);
-                taskResult.Succeeded = (this.dataContext.SaveChanges() == 1);
+                taskResult.Succeeded = (this.unitOfWork.SaveChanges() == 1);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Fout bij het ophalen van actieve projecten.");
+                logger.Error(ex, "Fout bij het ophalen van actieve projecten.");
                 taskResult.Error = ex;
             }
             return taskResult;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,7 @@ namespace RoosterPlanner.Api
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
+        //readonly string MyAllowSpecificOrigins = "GlobalAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -55,6 +56,15 @@ namespace RoosterPlanner.Api
             // Enable Application Insights telemetry collection.
             services.AddApplicationInsightsTelemetry();
 
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(MyAllowSpecificOrigins,
+            //    builder =>
+            //    {
+            //        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            //    });
+            //});
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
@@ -64,6 +74,8 @@ namespace RoosterPlanner.Api
                 options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
             });
 
+            services.AddAutoMapper(typeof(AutoMapperProfiles.ProjectProfile));
+
             services.Configure<AzureAuthenticationConfig>(Configuration.GetSection(AzureAuthenticationConfig.ConfigSectionName));
 
             services.AddSingleton<ILogger, Logger>((l) => {
@@ -72,6 +84,9 @@ namespace RoosterPlanner.Api
 
             services.AddScoped<IAzureB2CService, AzureB2CService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IParticipationService, ParticipationService>();
+            services.AddScoped<ITaskService, TaskService>();
 
             ServiceContainer.Register(services, this.Configuration);
         }
@@ -88,6 +103,8 @@ namespace RoosterPlanner.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(i => i.WithOrigins(Configuration.GetSection("AllowedHosts").Value).AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthentication();
 
