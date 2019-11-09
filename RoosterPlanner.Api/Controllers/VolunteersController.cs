@@ -24,10 +24,10 @@ namespace RoosterPlanner.Api.Controllers
         }
 
         [HttpGet("getprojects")]
-        public async Task<ActionResult<IEnumerable<Projects>>> Get()
+        public async Task<ActionResult<IEnumerable<ProjectViewModel>>> Get()
         {
             var projects = await ProjectService.GetActiveProjectsAsync();
-            return  projects.Data.Select(i => Mapper.Map<Projects>(i)).ToList();
+            return projects.Data.Select(i => Mapper.Map<ProjectViewModel>(i)).ToList();
         }
     }
 }
