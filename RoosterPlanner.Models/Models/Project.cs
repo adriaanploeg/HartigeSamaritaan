@@ -40,9 +40,13 @@ namespace RoosterPlanner.Models
 
         public List<ProjectTask> ProjectTasks { get; set; }
 
+        public List<Participation> Participations { get; set; }
+
         //Constructor
         public Project() : this(Guid.Empty)
         {
+            this.ProjectTasks = new List<ProjectTask>();
+            Participations = new List<Participation>();
         }
 
         //Constructor

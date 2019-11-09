@@ -12,19 +12,24 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminComponent } from './pages/admin/admin.component';
+import { NgxTuiCalendarModule } from 'ngx-tui-calendar';
+import { QuestionsComponent } from './components/questions/questions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AdminComponent,
+    QuestionsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    NgxTuiCalendarModule.forRoot(),
     MaterialModule,
     MsalModule.forRoot({
       clientID: environment.options.appId,
