@@ -204,7 +204,7 @@
       "apiVersion": "2016-09-01",
       "name": "[concat(parameters('hostingPlanName'), '-', resourceGroup().name)]",
       "type": "Microsoft.Insights/autoscalesettings",
-      "location": "[resourceGroup().location]",
+      "location": "westeurope",
       "tags": {
         "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "Resource",
         "displayName": "AutoScaleSettings"
