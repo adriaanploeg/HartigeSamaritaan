@@ -6,6 +6,16 @@
       "type": "string",
       "minLength": 1
     },
+    "environment": {
+      "type": "string",
+      "minLength": 3,
+      "defaultValue": "dev",
+      "allowedValues": [
+        "dev",
+        "tst",
+        "prd"
+      ]
+    },
     "skuName": {
       "type": "string",
       "defaultValue": "F1",
@@ -76,11 +86,23 @@
       "metadata": {
         "description": "Describes the performance level for Edition"
       }
+    },
+    "hackatonstoragedevType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
     }
   },
   "variables": {
-    "webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]",
-    "sqlserverName": "[concat('sqlserver', uniqueString(resourceGroup().id))]"
+    "webSiteName": "[concat('roosterplanner-api-', parameters('environment'))]",
+    "sqlserverName": "[concat('roosterplanner-sqlserver-', parameters('environment'))]",
+    "hackatonstoragedevName": "[concat('hackatonstorage', parameters('environment'))]"
   },
   "resources": [
     {
@@ -259,6 +281,20 @@
       "properties": {
         "ApplicationId": "[variables('webSiteName')]"
       }
+    },
+    {
+      "apiVersion": "2016-01-01",
+      "dependsOn": [],
+      "kind": "StorageV2",
+      "location": "[resourceGroup().location]",
+      "name": "[variables('hackatonstoragedevName')]",
+      "sku": {
+        "name": "[parameters('hackatonstoragedevType')]"
+      },
+      "tags": {
+        "displayName": "hackatonstoragedev"
+      },
+      "type": "Microsoft.Storage/storageAccounts"
     }
   ]
 }
