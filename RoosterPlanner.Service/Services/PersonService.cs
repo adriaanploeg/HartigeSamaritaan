@@ -9,16 +9,15 @@ using RoosterPlanner.Service.DataModels;
 
 namespace RoosterPlanner.Service
 {
-    public interface IParticipationService
+    public interface IPersonService
     {
-        Task<TaskListResult<Project>> AddParticipationAsync(Guid Oid, Guid projectId);
+        Task<TaskListResult<Project>> UpdatePersonName(Guid oid, string name);
     }
 
-    public class ParticipationService : IParticipationService
+    public class PersonService : IPersonService
     {
         #region Fields
         private readonly IUnitOfWork unitOfWork = null;
-        private readonly IParticipationRepository participationRepository = null;
         private readonly IPersonRepository personRepository = null;
         private readonly ILogger logger = null;
         #endregion
@@ -26,10 +25,9 @@ namespace RoosterPlanner.Service
         private readonly Data.Context.RoosterPlannerContext dataContext = null;
 
         //Constructor
-        public ParticipationService(IUnitOfWork unitOfWork, ILogger logger)
+        public PersonService(IUnitOfWork unitOfWork, ILogger logger)
         {
             this.unitOfWork = unitOfWork;
-            this.participationRepository = unitOfWork.ParticipationRepository;
             this.logger = logger;
         }
 
@@ -37,35 +35,26 @@ namespace RoosterPlanner.Service
         /// Returns a list of open projects.
         /// </summary>
         /// <returns>List of projects that are not closed.</returns>
-        public async Task<TaskListResult<Project>> AddParticipationAsync(Guid Oid, Guid projectId)
+        public async Task<TaskListResult<Project>> UpdatePersonName(Guid oid, string name)
         {
             TaskListResult<Project> taskResult = TaskListResult<Project>.CreateDefault();
-            
+
             try
             {
-                var person = await unitOfWork.PersonRepository.GetPersonByOidAsync(Oid);
-                if(person == null)
+                var person = await unitOfWork.PersonRepository.GetPersonByOidAsync(oid);
+                if (person == null)
                 {
                     //TODO: change exception
                     throw new Exception("Who Are You?");
                 }
-                var project = await unitOfWork.ProjectRepository.GetAsync(projectId);
-                if (project == null)
-                {
-                    //TODO: change exception
-                    throw new Exception("Wait? What project?");
-                }
-                var participation = new Participation()
-                {
-                    ProjectId = projectId,
-                    PersonId = person.Id
-                };
-                participationRepository.Add(participation);
+
+                person.Name = name;
+                
                 await unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Fout bij het toevoegen van een participatie.");
+                logger.Error(ex, "Fout bij het updaten van een persoon.");
                 taskResult.Error = ex;
             }
             return taskResult;
