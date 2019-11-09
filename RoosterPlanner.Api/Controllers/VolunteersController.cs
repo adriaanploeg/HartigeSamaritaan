@@ -18,12 +18,16 @@ namespace RoosterPlanner.Api.Controllers
         public IProjectService ProjectService { get; set; }
 
         public IParticipationService ParticipationService { get; set; }
+        public IAzureB2CService AzureB2CService { get; set; }
+        public IPersonService PersonService { get; set; }
 
-        public VolunteersController(IMapper mapper, IProjectService projectService, IParticipationService participationService)
+        public VolunteersController(IMapper mapper, IProjectService projectService, IParticipationService participationService, IAzureB2CService azureB2CService, IPersonService personService)
         {
             Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             ProjectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
             ParticipationService = participationService ?? throw new ArgumentNullException(nameof(participationService));
+            AzureB2CService = azureB2CService ?? throw new ArgumentNullException(nameof(azureB2CService));
+            PersonService = personService ?? throw new ArgumentNullException(nameof(personService));
         }
 
         [HttpGet("getprojects")]
@@ -37,6 +41,16 @@ namespace RoosterPlanner.Api.Controllers
         public async Task<ActionResult> SetParticipation(Guid oid, Guid projectId)
         {
             await ParticipationService.AddParticipationAsync(oid, projectId);
+            return Ok();
+        }
+
+        [HttpGet("triggerupdate/{oid}")]
+        public async Task<ActionResult> TriggerUpdate(Guid oid)
+        {
+            var user = await AzureB2CService.GetUserAsync(oid);
+
+            await PersonService.UpdatePersonName(oid, user.Data.DisplayName);
+
             return Ok();
         }
     }
