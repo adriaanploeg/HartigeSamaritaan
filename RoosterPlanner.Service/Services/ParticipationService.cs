@@ -49,7 +49,12 @@ namespace RoosterPlanner.Service
                     //TODO: change exception
                     throw new Exception("Who Are You?");
                 }
-
+                var project = await unitOfWork.ProjectRepository.GetAsync(projectId);
+                if (project == null)
+                {
+                    //TODO: change exception
+                    throw new Exception("Wait? What project?");
+                }
                 var participation = new Participation()
                 {
                     ProjectId = projectId,
