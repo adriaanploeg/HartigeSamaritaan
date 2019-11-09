@@ -20,6 +20,7 @@ namespace RoosterPlanner.Api.Controllers
         private readonly ITaskService taskService = null;
         private readonly ILogger logger = null;
 
+        //Constructor
         public TasksController(IMapper mapper, ITaskService taskService, ILogger logger)
         {
             this.taskService = taskService;
@@ -35,6 +36,19 @@ namespace RoosterPlanner.Api.Controllers
                 return taskListResult.Data.Select(t => mapper.Map<TaskViewModel>(t)).ToList();
             }
             return UnprocessableEntity();
+        }
+
+        public async Task<ActionResult> DeleteTask(Guid id)
+        {
+            if (id != Guid.Empty)
+            {
+                TaskResult result = await this.taskService.SetTaskDeleteAsync(id);
+                if (result.Succeeded)
+                    return Ok();
+                else
+                    return UnprocessableEntity(result.Message);
+            }
+            return BadRequest("No valid id.");
         }
     }
 }
