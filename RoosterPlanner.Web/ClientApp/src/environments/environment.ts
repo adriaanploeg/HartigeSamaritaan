@@ -11,7 +11,7 @@ export const environment = {
       appId: "c832c923-37c6-4145-8c75-a023ecc7a98f",
     authority: "https://login.microsoftonline.com/tfp/DeltanHackaton.onmicrosoft.com/B2C_1_susi/"
   }
-}; 
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
